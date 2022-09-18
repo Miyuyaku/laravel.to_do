@@ -47,16 +47,19 @@ class TodoController extends Controller
      * @param  \App\Todo  $todo
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Goal $goal, Todo $todo)
+     public function update(Request $request, Goal $goal, Todo $todo)
     {
-        $todo->content = request('content');
-        $todo->user_id = Auth::id();
-        $todo->goal_id = request('position');
-        $todo->done = (bool) request('done');
-        $todo->save();
-        $todos = $goal->todos()->orderBy('done', 'asc')->orderBy('position', 'asc')->get();
-        return response()->json($todos);
+         $todo->content = request('content');
+         $todo->user_id = Auth::id();
+         $todo->goal_id = $goal->id;
+         $todo->position = request('position');
+         $todo->done = (bool) request('done');
+         $todo->save();
+ 
+         $todos = $goal->todos()->orderBy('done', 'asc')->orderBy('position', 'asc')->get();
+         return response()->json($todos);
     }
+
 
     /**
      * Remove the specified resource from storage.
@@ -64,10 +67,10 @@ class TodoController extends Controller
      * @param  \App\Todo  $todo
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Request $request, Goal $goal,Todo $todo)
+  public function destroy(Request $request, Goal $goal,Todo $todo)
     {
-        $todo->delete();
-        $todos = $goal->todos()->orderBy('done', 'asc')->orderBy('position', 'asc')->get();
-        return response()->json($todos);
+         $todo->delete();
+         $todos = $goal->todos()->orderBy('done', 'asc')->orderBy('position', 'asc')->get();
+         return response()->json($todos);
     }
 }

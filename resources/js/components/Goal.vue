@@ -35,6 +35,7 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal" v-on:click="editGoalTitle">Edit</button>
+
                     </div>
                 </div>
             </div>
@@ -72,6 +73,7 @@
                             </div>
                         </div>
                     </div>
+                     <goals-todos :goalId="goal.id"></goals-todos>
                 </div>
             </div>
         </div>
@@ -81,6 +83,7 @@
 <script>
 import axios from "axios"
 import $ from "jquery"
+  import Todos from "./Todos.vue";
 export default {
     data: function() {
         return {
@@ -89,6 +92,9 @@ export default {
             goals: []
         }
     },
+     components: {
+         'goals-todos': Todos
+     },
     mounted: function () {
         this.getAllGoals();
     },
